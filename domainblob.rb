@@ -5141,7 +5141,7 @@ def domainblob_main()
 		timeDiff = timeEnd - timeThen
 		
 		blobResults.puts
-		blobResults.puts "Process took: " + timeDiff + " seconds"
+		blobResults.puts "Process took: " + timeDiff.to_s + " seconds"
 		blobResults.puts nonavailNum.to_s + " domains were unavailable"
 		blobResults.puts availNum.to_s + " domains were AVAILABLE"
 		blobResults.puts (nonavailNum + availNum).to_s + " total domains were checked"
@@ -5152,7 +5152,7 @@ def domainblob_main()
 		File.rename(thePhrase+".txt", thePhrase+availNum.to_s+".txt")
 
 		puts
-		puts "Process took: " + timeDiff + " seconds"
+		puts "Process took: " + timeDiff.to_s + " seconds"
 		puts nonavailNum.to_s + " domains were unavailable"
 		puts availNum.to_s + " domains were AVAILABLE"
 		puts (nonavailNum + availNum).to_s + " total domains were checked"
