@@ -5045,8 +5045,10 @@ def http_check_domain(query)
 		if (!res)
 			return false
 		else
-			return false
+			retry
 		end
+	rescue Timeout::Error
+		return false
 	end
 end
 
