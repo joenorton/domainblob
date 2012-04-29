@@ -5141,10 +5141,10 @@ def domainblob_main()
 		timeDiff = timeEnd - timeThen
 		
 		blobResults.puts
-		blobResults.puts "Process took: " + timediff + " seconds"
+		blobResults.puts "Process took: " + timeDiff + " seconds"
 		blobResults.puts nonavailNum.to_s + " domains were unavailable"
 		blobResults.puts availNum.to_s + " domains were AVAILABLE"
-		blobResults.puts (nonavailnum + availNum).to_s + " total domains were checked"
+		blobResults.puts (nonavailNum + availNum).to_s + " total domains were checked"
 		blobResults.puts "Direct Whois " + whoiscounter.to_s
 		blobResults.puts "WhoisDotNet " + whoisdotnetcounter.to_s
 		blobResults.puts "HTTP Check " + httpcounter.to_s
@@ -5152,10 +5152,10 @@ def domainblob_main()
 		File.rename(thePhrase+".txt", thePhrase+availNum.to_s+".txt")
 
 		puts
-		puts "Process took: " + timediff + " seconds"
+		puts "Process took: " + timeDiff + " seconds"
 		puts nonavailNum.to_s + " domains were unavailable"
 		puts availNum.to_s + " domains were AVAILABLE"
-		puts (nonavailnum + availNum).to_s + " total domains were checked"
+		puts (nonavailNum + availNum).to_s + " total domains were checked"
 		puts "Direct Whois " + whoiscounter.to_s
 		puts "WhoisDotNet " + whoisdotnetcounter.to_s
 		puts "HTTP Check " + httpcounter.to_s
