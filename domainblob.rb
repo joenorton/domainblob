@@ -34,11 +34,13 @@ def http_check_domain(query)
 	begin
 		entry = Resolv.getaddress(query)
 	rescue Resolv::ResolvError
-		return false
+		return false #dns could not resolve, may still be registered
+	rescue Timeout::Error
+		retry #timeout, no info gained, retry?
 	end
 	if entry
 		$httpcounter += 1
-		return true #yes it exists
+		return true #yes, domain is registered
 	else
 		return false #not sure why it would fail, so lets fail out of this f'n
 	end
