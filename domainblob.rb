@@ -5102,7 +5102,6 @@ def domainblob_main()
 		 blobResults = File.new(thePhrase+".txt","w+")
 		end
 		avail = []
-		nonavail = []
 		puts
 		puts "###Started!###"
 		puts "Now analyzing domains with root: "+thePhrase
@@ -5132,19 +5131,13 @@ def domainblob_main()
 			blobResults.puts entry
 		end
 		blobResults.puts
-		blobResults.puts "Not Available"
-		blobResults.puts "#######################"
-		for entry in nonavail
-			blobResults.puts entry
-		end
 		timeEnd = Time.now
 		timeDiff = timeEnd - timeThen
 		
 		blobResults.puts
 		blobResults.puts "Process took: " + timeDiff.to_s + " seconds"
-		blobResults.puts nonavailNum.to_s + " domains were unavailable"
 		blobResults.puts availNum.to_s + " domains were AVAILABLE"
-		blobResults.puts (nonavailNum + availNum).to_s + " total domains were checked"
+		blobResults.puts ($whoiscounter + $whoisdotnetcounter + $httpcounter).to_s + " total domains were checked"
 		blobResults.puts "Direct Whois " + $whoiscounter.to_s
 		blobResults.puts "WhoisDotNet " + $whoisdotnetcounter.to_s
 		blobResults.puts "HTTP Check " + $httpcounter.to_s
@@ -5153,9 +5146,8 @@ def domainblob_main()
 
 		puts
 		puts "Process took: " + timeDiff.to_s + " seconds"
-		puts nonavailNum.to_s + " domains were unavailable"
 		puts availNum.to_s + " domains were AVAILABLE"
-		puts (nonavailNum + availNum).to_s + " total domains were checked"
+		puts ($whoiscounter + $whoisdotnetcounter + $httpcounter).to_s + " total domains were checked"
 		puts "Direct Whois " + $whoiscounter.to_s
 		puts "WhoisDotNet " + $whoisdotnetcounter.to_s
 		puts "HTTP Check " + $httpcounter.to_s
