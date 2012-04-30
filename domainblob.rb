@@ -14,19 +14,23 @@ load 'prefix_array.rb'
 load 'suffix_array.rb'
 
 def ask_whois_dotnet(query)
-	doc = Nokogiri::HTML(open('http://www.whois.net/whois/'+query,'User-Agent' => 'ruby'))
-	linkArray = []
-	doc.xpath('//div/h1/span').each do |link|
-		sleep 5
-		linkArray.push(link.content)
-	end
-	$whoisdotnetcounter += 1
-	if(linkArray[0] == "available")
-		puts "AVAILABLE: " + query
-		return query
-	elsif(linkArray[0] == "not available")
-		puts "not available: " + query
-		return false
+	begin
+		doc = Nokogiri::HTML(open('http://www.whois.net/whois/'+query,'User-Agent' => 'ruby'))
+		linkArray = []
+		doc.xpath('//div/h1/span').each do |link|
+			sleep 5
+			linkArray.push(link.content)
+		end
+		$whoisdotnetcounter += 1
+		if(linkArray[0] == "available")
+			puts "AVAILABLE: " + query
+			return query
+		elsif(linkArray[0] == "not available")
+			puts "not available: " + query
+			return false
+		end
+	rescue Timeout::Error
+		retry #timeout, no info gained, retry?
 	end
 end
 
