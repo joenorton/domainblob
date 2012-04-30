@@ -11,6 +11,7 @@ require 'open-uri'
 require 'resolv'
 
 load 'prefix_array.rb'
+load 'suffix_array.rb'
 
 def ask_whois_dotnet(query)
 	doc = Nokogiri::HTML(open('http://www.whois.net/whois/'+query,'User-Agent' => 'ruby'))
@@ -108,7 +109,7 @@ def domainblob_main()
 				avail.push(each_avail)
 			end
 		end
-		for each in $suffixArray
+		for each in @suffixArray
 			each_avail = checkDomain(thePhrase + each + ".com")
 			if each_avail
 				avail.push(each_avail)
