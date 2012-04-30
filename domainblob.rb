@@ -8,6 +8,7 @@ require 'rubygems'
 require 'nokogiri'
 require 'whois'
 require 'open-uri'
+require 'resolv'
 
 $prefixArray = [
 	'Aa',
@@ -5033,29 +5034,22 @@ end
 
 def http_check_domain(query)
 	begin
-		url = URI.parse('http://'+query)
-		res = Net::HTTP.start(url.host, url.port) {|http|
-		  http.get('/')
-		}
-		if (res)
-			$httpcounter += 1
-			return true #yes, domain exists
-		end
-	rescue
-		if (!res)
-			return false
-		else
-			retry
-		end
-	rescue Timeout::Error
+		entry = Resolv.getaddress(query)
+	rescue Resolv::ResolvError
 		return false
+	end
+	if entry
+		$httpcounter += 1
+		return true #yes it exists
+	else
+		return false #not sure why it would fail, so lets fail out of this f'n
 	end
 end
 
 def checkDomain(domain)
-	if (http_check_domain(domain)) #if exists, we'll return false
+	if (http_check_domain(domain)) #if exists - this passes, and we'll return false out of this f'n
 		puts "not available: " + domain
-		return false #not available, false
+		return false #domain not available, false
 	else
 		begin
 			$c = Whois::Client.new(:timeout => nil)
@@ -5063,10 +5057,10 @@ def checkDomain(domain)
 			$whoiscounter += 1
 			 if (r.available?)
 				puts "AVAILABLE: " + domain
-				return domain #yes, true, its available
+				return domain #yes, true, domain is available
 			 else
 				puts "not available: " + domain
-				return false #not available, false
+				return false #domain not available, false
 			 end
 		rescue
 			whoisdotnet = ask_whois_dotnet(domain)
@@ -5124,7 +5118,6 @@ def domainblob_main()
 			end
 		end
 		availNum = avail.length
-		nonavailNum = nonavail.length
 		blobResults.puts "Available"
 		blobResults.puts "#######################"
 		for entry in avail

@@ -7,6 +7,7 @@ Required Gems:
 * Nokogiri
 * Whois
 * Open-uri
+* Resolv
 
 How to use:
 ===========
