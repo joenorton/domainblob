@@ -5145,9 +5145,9 @@ def domainblob_main()
 		blobResults.puts nonavailNum.to_s + " domains were unavailable"
 		blobResults.puts availNum.to_s + " domains were AVAILABLE"
 		blobResults.puts (nonavailNum + availNum).to_s + " total domains were checked"
-		blobResults.puts "Direct Whois " + whoiscounter.to_s
-		blobResults.puts "WhoisDotNet " + whoisdotnetcounter.to_s
-		blobResults.puts "HTTP Check " + httpcounter.to_s
+		blobResults.puts "Direct Whois " + $whoiscounter.to_s
+		blobResults.puts "WhoisDotNet " + $whoisdotnetcounter.to_s
+		blobResults.puts "HTTP Check " + $httpcounter.to_s
 		blobResults.close
 		File.rename(thePhrase+".txt", thePhrase+availNum.to_s+".txt")
 
@@ -5156,9 +5156,9 @@ def domainblob_main()
 		puts nonavailNum.to_s + " domains were unavailable"
 		puts availNum.to_s + " domains were AVAILABLE"
 		puts (nonavailNum + availNum).to_s + " total domains were checked"
-		puts "Direct Whois " + whoiscounter.to_s
-		puts "WhoisDotNet " + whoisdotnetcounter.to_s
-		puts "HTTP Check " + httpcounter.to_s
+		puts "Direct Whois " + $whoiscounter.to_s
+		puts "WhoisDotNet " + $whoisdotnetcounter.to_s
+		puts "HTTP Check " + $httpcounter.to_s
 	end
 end
 domainblob_main()
