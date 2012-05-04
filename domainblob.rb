@@ -82,7 +82,13 @@ def get_root_domains(q)
 end
 
 def domainblob_main()
-	totalPhraseList = IO.foreach("totalPhraseList.txt") do |thePhrase|
+	if ARGV[0]
+		q = ARGV
+	else
+		q = File.read("totalPhraseList.txt")
+		q = q.split('\n')
+	end
+	q.each do |thePhrase|
 		$whoiscounter = 0
 		$httpcounter = 0
 		$whoisdotnetcounter = 0
@@ -148,6 +154,7 @@ def domainblob_main()
 		puts "Direct Whois " + $whoiscounter.to_s
 		puts "WhoisDotNet " + $whoisdotnetcounter.to_s
 		puts "HTTP Check " + $httpcounter.to_s
+		Dir.chdir("..")
 	end
 end
 domainblob_main()
