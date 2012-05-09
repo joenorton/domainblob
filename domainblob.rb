@@ -82,8 +82,9 @@ def get_root_domains(q)
 end
 
 def domainblob_main()
-	if ARGV[0]
-		q = ARGV
+	arg_dup = ARGV.map(&:dup)
+	if arg_dup[0]
+		q = arg_dup
 	else
 		q = File.read("totalPhraseList.txt")
 		q = q.split('\n')
