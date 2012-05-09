@@ -73,12 +73,30 @@ def checkDomain(domain)
 	end
 end
 def get_root_domains(q)
- checkDomain(q+".com")
- checkDomain(q+".org")
- checkDomain(q+".net")
- checkDomain(q+".co")
- checkDomain(q+".io")
- checkDomain(q+".ly")
+ dotcom = checkDomain(q+".com")
+	if dotcom
+		$avail.push(dotcom)
+	end
+ dotorg = checkDomain(q+".org")
+ 	if dotorg
+		$avail.push(dotorg)
+	end
+ dotnet = checkDomain(q+".net")
+ 	if dotnet
+		$avail.push(dotnet)
+	end
+ dotco = checkDomain(q+".co")
+ 	if dotco
+		$avail.push(dotco)
+	end
+ dotio = checkDomain(q+".io")
+ 	if dotio
+		$avail.push(dotio)
+	end
+ dotly = checkDomain(q+".ly")
+ 	if dotly
+		$avail.push(dotly)
+	end
 end
 
 def domainblob_main()
@@ -93,7 +111,8 @@ def domainblob_main()
 		$whoiscounter = 0
 		$httpcounter = 0
 		$whoisdotnetcounter = 0
-
+		$avail = []
+		
 		thePhrase.capitalize!
 		thePhrase.strip!
 		timeThen = Time.now
@@ -106,7 +125,6 @@ def domainblob_main()
 		 Dir.chdir("blobs")
 		 blobResults = File.new(thePhrase+".txt","w+")
 		end
-		avail = []
 		puts
 		puts "###Started!###"
 		puts "Now analyzing domains with root: "+thePhrase
@@ -119,19 +137,19 @@ def domainblob_main()
 		for each in @prefixArray
 			each_avail = checkDomain(each + thePhrase + ".com")
 			if each_avail
-				avail.push(each_avail)
+				$avail.push(each_avail)
 			end
 		end
 		for each in @suffixArray
 			each_avail = checkDomain(thePhrase + each + ".com")
 			if each_avail
-				avail.push(each_avail)
+				$avail.push(each_avail)
 			end
 		end
-		availNum = avail.length
+		availNum = $avail.length
 		blobResults.puts "Available"
 		blobResults.puts "#######################"
-		for entry in avail
+		for entry in $avail
 			blobResults.puts entry
 		end
 		blobResults.puts
