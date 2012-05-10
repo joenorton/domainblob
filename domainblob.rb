@@ -18,13 +18,13 @@ def ask_whois_dotnet(query)
 		doc = Nokogiri::HTML(open('http://www.whois.net/whois/'+query,'User-Agent' => 'ruby'))
 		linkArray = []
 		doc.xpath('//div/h1/span').each do |link|
-			sleep 5
 			linkArray.push(link.content)
 		end
 		$whoisdotnetcounter += 1
 		if(linkArray[0] == "available")
 			puts "AVAILABLE: " + query
-			return query
+			$avail.push(query)
+			return true
 		elsif(linkArray[0] == "not available")
 			puts "not available: " + query
 			return false
@@ -61,7 +61,8 @@ def checkDomain(domain)
 			$whoiscounter += 1
 			 if (r.available?)
 				puts "AVAILABLE: " + domain
-				return domain #yes, true, domain is available
+				$avail.push(domain) #yes, true, domain is available
+				return true
 			 else
 				puts "not available: " + domain
 				return false #domain not available, false
@@ -72,40 +73,29 @@ def checkDomain(domain)
 		end
 	end
 end
+
 def get_root_domains(q)
- dotcom = checkDomain(q+".com")
-	if dotcom
-		$avail.push(dotcom)
-	end
- dotorg = checkDomain(q+".org")
- 	if dotorg
-		$avail.push(dotorg)
-	end
- dotnet = checkDomain(q+".net")
- 	if dotnet
-		$avail.push(dotnet)
-	end
- dotco = checkDomain(q+".co")
- 	if dotco
-		$avail.push(dotco)
-	end
- dotio = checkDomain(q+".io")
- 	if dotio
-		$avail.push(dotio)
-	end
- dotly = checkDomain(q+".ly")
- 	if dotly
-		$avail.push(dotly)
-	end
+	checkDomain(q+".com")
+	checkDomain(q+".org")
+	checkDomain(q+".net")
+	checkDomain(q+".co")
+	checkDomain(q+".io")
+	checkDomain(q+".ly")
 end
 
 def domainblob_main()
 	arg_dup = ARGV.map(&:dup)
 	if arg_dup[0]
 		q = arg_dup
-	else
+	elsif (File.file?("totalPhraseList.txt"))
 		q = File.read("totalPhraseList.txt")
 		q = q.split('\n')
+	else
+		puts
+		puts "###Usage: ruby domainblob.rb phrase"
+		puts "##Or, create 'totalPhraseList.txt' and add one phrase per line"
+		puts "##Thanks, try again."
+		break
 	end
 	q.each do |thePhrase|
 		$whoiscounter = 0
@@ -135,16 +125,10 @@ def domainblob_main()
 		get_root_domains(thePhrase)
 		#now we cycle through prefixes, then suffixes for this phrase
 		for each in @prefixArray
-			each_avail = checkDomain(each + thePhrase + ".com")
-			if each_avail
-				$avail.push(each_avail)
-			end
+			checkDomain(each + thePhrase + ".com")
 		end
 		for each in @suffixArray
-			each_avail = checkDomain(thePhrase + each + ".com")
-			if each_avail
-				$avail.push(each_avail)
-			end
+			checkDomain(thePhrase + each + ".com")
 		end
 		availNum = $avail.length
 		blobResults.puts "Available"
