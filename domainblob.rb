@@ -57,7 +57,7 @@ def checkDomain(domain)
 	else
 		begin
 			$c = Whois::Client.new(:timeout => nil)
-			 r = $c.query(domain)
+			 r = $c.lookup(domain)
 			$whoiscounter += 1
 			 if (r.available?)
 				puts "AVAILABLE: " + domain
@@ -95,7 +95,7 @@ def domainblob_main()
 		puts "###Usage: ruby domainblob.rb phrase"
 		puts "##Or, create 'totalPhraseList.txt' and add one phrase per line"
 		puts "##Thanks, try again."
-		break
+		return false
 	end
 	q.each do |thePhrase|
 		$whoiscounter = 0
