@@ -1,0 +1,41 @@
+@latinPreAndSuffixArray = %w(
+  io
+  virtus
+  ego
+  vox
+  ex
+  ideo
+  novo
+  novus
+  pax
+  rex
+  velox
+  verus
+  vivo
+  nova
+)
+@bothPreAndSuffixArray = %w(
+  media
+  direct
+  access
+  ez
+  easy
+  info
+  interactive
+  biz
+  buzz
+  bit
+  byte
+  up
+  tech
+  on
+  out
+  auto
+  pulse
+  x
+  venture
+  trend
+  life
+  retro
+  secret
+)
