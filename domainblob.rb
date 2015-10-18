@@ -16,26 +16,14 @@ require_relative('outputs.rb')
 require_relative('util.rb')
 
 def domainblob_main
-  arg_dup = ARGV.map(&:dup)
-  if arg_dup[0]
-    if arg_dup[0] == '-h' || arg_dup[0] == '--help'
-      help?
-      return false
-    end
-    q = arg_dup
- elsif File.file?(PHRASE_LIST_FILENAME)
-    q = File.read(PHRASE_LIST_FILENAME)
-    q = q.split('\n')
- else
-   help?
- end
-  q.each do |thePhrase|
+  db_opts = fetch_opts(ARGV.map(&:dup))
+  db_opts.each do |thePhrase|
    @whoiscounter, @httpcounter, @whoisdotnetcounter = 0, 0, 0
    @avail = []
-
+   start_time = Time.now
+   #
    thePhrase = sanitize_input(thePhrase)
-   timeThen = Time.now
-
+   #
    make_and_or_nav_to_dir(thePhrase)
    #
    blobResults = File.new(thePhrase + RESULT_FILE_EXT, 'w+')
@@ -46,20 +34,24 @@ def domainblob_main
    # now we cycle through prefixes, then suffixes for this phrase
    cycle_thru_all_prefix_and_suffix_lists(thePhrase)
    #
-   availNum = @avail.length
+   avail_num = @avail.length
    @avail = @avail.sort_by(&:length)
    #
    write_results(blobResults)
    #
-   timeEnd = Time.now
-   timeDiff = timeEnd - timeThen
+   end_time = Time.now
+   time_diff = end_time - start_time
    #
-   ending_output(timeDiff, availNum, blobResults)
+   ending_output(time_diff, avail_num, blobResults)
    blobResults.close
-   File.rename(thePhrase + RESULT_FILE_EXT, thePhrase + availNum.to_s + RESULT_FILE_EXT)
    #
-   ending_output(timeDiff, availNum)
+   File.rename(
+    thePhrase + RESULT_FILE_EXT,
+    thePhrase + availNum.to_s + RESULT_FILE_EXT
+   )
+   #
+   ending_output(time_diff, avail_num)
    Dir.chdir('..')
- end
+  end
 end
 domainblob_main

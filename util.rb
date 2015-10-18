@@ -18,3 +18,20 @@ def sanitize_input(thePhrase)
   thePhrase.strip!
   thePhrase
 end
+
+def fetch_opts(arg_dup)
+ if arg_dup[0]
+    if arg_dup[0] == '-h' || arg_dup[0] == '--help'
+      help?
+      return false
+    end
+    q = arg_dup
+ elsif File.file?(PHRASE_LIST_FILENAME)
+    q = File.read(PHRASE_LIST_FILENAME)
+    q = q.split('\n')
+ else
+   help?
+   return false
+ end
+ return q
+end
