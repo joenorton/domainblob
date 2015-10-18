@@ -1,7 +1,7 @@
 ##################################################################
 # ####DomainBlob.rb -- quick domain-name lookup and idea generation
 # ####created by Joe Norton
-# ####http://softwarebyjoe.com
+# ####http://norton.io
 # #LICENSING: GNU GPLv3  License##################################
 # ! usr/bin/ruby
 require 'rubygems'
