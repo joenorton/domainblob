@@ -1,3 +1,9 @@
+##################################################################
+# ####DomainBlob.rb -- quick domain-name lookup and idea generation
+# ####created by Joe Norton
+# ####http://softwarebyjoe.com
+# #LICENSING: GNU GPLv3  License##################################
+# ! usr/bin/ruby
 def http_check_domain(query)
   begin
    entry = Resolv.getaddress(query)

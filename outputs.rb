@@ -1,3 +1,9 @@
+##################################################################
+# ####DomainBlob.rb -- quick domain-name lookup and idea generation
+# ####created by Joe Norton
+# ####http://softwarebyjoe.com
+# #LICENSING: GNU GPLv3  License##################################
+# ! usr/bin/ruby
 def help?
   puts "\n###Usage: ruby domainblob.rb phrase\n" \
        "##Or, create 'totalPhraseList.txt' and add one phrase per line\n" \

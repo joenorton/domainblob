@@ -1,3 +1,9 @@
+##################################################################
+# ####DomainBlob.rb -- quick domain-name lookup and idea generation
+# ####created by Joe Norton
+# ####http://softwarebyjoe.com
+# #LICENSING: GNU GPLv3  License##################################
+# ! usr/bin/ruby
 load 'lists/prefixes.rb'
 load 'lists/suffixes.rb'
 load 'lists/us_states.rb'
