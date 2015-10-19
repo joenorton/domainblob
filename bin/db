@@ -1,0 +1,46 @@
+##################################################################
+# ####DomainBlob.rb -- quick domain-name lookup and idea generation
+# ####created by Joe Norton
+# ####http://norton.io
+# #LICENSING: GNU GPLv3  License##################################
+# ! usr/bin/ruby
+
+require 'domainblob'
+require 'optparse'
+
+options = {}
+optparse = OptionParser.new do |opts|
+  # Set a banner, displayed at the top
+  # of the help screen.
+  opts.banner = 'Usage: db [MODE FLAG] [options] seed_keyword'
+  # Define the options, and what they do
+  options['verbose'] = false
+  opts.on('-v', '--verbose', 'Output more information') do
+    options['verbose'] = true
+  end
+  # This displays the help screen, all programs are
+  # assumed to have this option.
+  opts.on('-h', '--help', 'Display this screen') do
+    puts opts
+    exit
+  end
+end
+
+optparse.parse!
+if ARGV[0].nil?
+  abort("###Missing Required Argument\nUsage: db [mode] [options] seed_keyword")
+end
+
+ARGV.each do|q|
+  if options['verbose']
+    puts '###############################'
+    puts '### [Domainblob]'
+    puts '### Being verbose'
+  end
+  puts '###############################'
+  puts "### [Domainblob] search for: #{q}"
+  Domainblob::CLI.new(q, options)
+  puts '### [Domainblob] is done.'
+  puts '###############################'
+  puts
+end

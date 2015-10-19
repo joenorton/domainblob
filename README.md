@@ -4,7 +4,6 @@ Domain Name Lookup Tool
 
 Required Gems:
 ==============
-* Nokogiri
 * Whois
 * Open-uri
 * Resolv
