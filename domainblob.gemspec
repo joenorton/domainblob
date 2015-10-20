@@ -26,9 +26,6 @@ Gem::Specification.new do |s|
 
   # If you have other dependencies, add them here
   s.add_runtime_dependency 'whois'
-  s.add_runtime_dependency 'resolv'
-  s.add_runtime_dependency 'open-uri'
-  s.add_runtime_dependency 'optparse'
 
   s.add_development_dependency 'bundler', '~> 1.6'
   s.add_development_dependency 'rake', '~> 10.3'

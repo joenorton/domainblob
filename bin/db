@@ -3,7 +3,7 @@
 # ####created by Joe Norton
 # ####http://norton.io
 # #LICENSING: GNU GPLv3  License##################################
-# ! usr/bin/ruby
+#! usr/bin/ruby
 
 require 'domainblob'
 require 'optparse'
@@ -18,6 +18,14 @@ optparse = OptionParser.new do |opts|
   opts.on('-v', '--verbose', 'Output more information') do
     options['verbose'] = true
   end
+  options['checkfile'] = false
+  opts.on('-c', '--check', 'MODE FLAG: Checkfile mode') do
+    options['checkfile'] = true
+  end
+  options['phraselist'] = false
+  opts.on('-l', '--list', 'MODE FLAG: Phraselist mode') do
+    options['phraselist'] = true
+  end
   # This displays the help screen, all programs are
   # assumed to have this option.
   opts.on('-h', '--help', 'Display this screen') do
@@ -31,16 +39,16 @@ if ARGV[0].nil?
   abort("###Missing Required Argument\nUsage: db [mode] [options] seed_keyword")
 end
 
-ARGV.each do|q|
-  if options['verbose']
+if options['verbose']
     puts '###############################'
     puts '### [Domainblob]'
     puts '### Being verbose'
-  end
-  puts '###############################'
-  puts "### [Domainblob] search for: #{q}"
-  Domainblob::CLI.new(q, options)
-  puts '### [Domainblob] is done.'
-  puts '###############################'
-  puts
+    puts '### In CheckFile Mode' if options['checkfile']
+    puts '### In PhraseList Mode' if options['phraselist']
 end
+puts '###############################'
+puts "### [Domainblob]: #{ARGV}"
+Domainblob::CLI.new(ARGV, options)
+puts '### [Domainblob] is done.'
+puts '###############################'
+puts

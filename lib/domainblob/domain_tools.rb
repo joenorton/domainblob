@@ -6,7 +6,6 @@
 # ! usr/bin/ruby
 require 'whois'
 require 'resolv'
-require 'open-uri'
 
 module Domainblob
   def http_check_domain(query)
