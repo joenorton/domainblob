@@ -17,7 +17,7 @@ module Domainblob
                 #
                 f = File.new(seed_keyword + RESULT_FILE_EXT, 'w+')
                 #
-                @outputter.start_output(f, seed_keyword)
+                @o.start_output(f, seed_keyword)
                 # first we check all possible combos for the root phrase
                 get_root_domains(seed_keyword)
                 # now we cycle through prefixes, then suffixes for this phrase
@@ -26,19 +26,19 @@ module Domainblob
                 avail_num = @avail.length
                 @avail = @avail.sort_by(&:length)
                 #
-                @outputter.write_results(f)
+                @o.write_results(f, @avail)
                 #
                 stop_clock
                 #
-                @outputter.ending_output(@time_diff, avail_num, f)
+                @o.ending_output(@time_diff, avail_num, @whoiscounter, @httpcounter, f)
                 f.close
                 #
                 File.rename(
                   seed_keyword + RESULT_FILE_EXT,
-                  seed_keyword + availNum.to_s + RESULT_FILE_EXT
+                  seed_keyword + avail_num.to_s + RESULT_FILE_EXT
                 )
                 #
-                @outputter.ending_output(@time_diff, avail_num)
+                @o.ending_output(@time_diff, avail_num)
                 Dir.chdir('..')
             end
         end

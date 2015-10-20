@@ -24,12 +24,12 @@ module Domainblob
       true
     end
 
-    def ending_output(timeDiff, availNum, blobResults = false)
+    def ending_output(timeDiff = 0, availNum = 0, whoiscounter = 0, httpcounter = 0, blobResults = false)
       long_str = "\nProcess took: " + timeDiff.to_s + " seconds\n" +
                  availNum.to_s + " domains were AVAILABLE\n" +
-                 (@whoiscounter + @httpcounter).to_s + " total domains were checked\n" \
-                 'Direct Whois ' + @whoiscounter.to_s + "\n" \
-                 'HTTP Check ' + @httpcounter.to_s
+                 (whoiscounter + httpcounter).to_s + " total domains were checked\n" \
+                 'Direct Whois ' + whoiscounter.to_s + "\n" \
+                 'HTTP Check ' + httpcounter.to_s
       if blobResults
         blobResults.puts long_str
       else
@@ -38,10 +38,15 @@ module Domainblob
       true
     end
 
-    def write_results(blobResults)
+    def write_results(blobResults, avail)
+      if avail.nil?
+        blobResults.puts 'ZERO Available'
+        blobResults.puts '#######################'
+        return false
+      end
       blobResults.puts 'Available'
       blobResults.puts '#######################'
-      for entry in @avail
+      for entry in avail
         blobResults.puts entry
       end
       blobResults.puts

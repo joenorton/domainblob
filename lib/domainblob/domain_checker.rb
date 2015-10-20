@@ -9,19 +9,23 @@ module Domainblob
     class DomainChecker
         require 'whois'
         require 'resolv'
-          def initialize(q, _options)
+
+          def initialize(q, options)
             @whoiscounter = 0
             @httpcounter = 0
             @whoisdotnetcounter = 0
             @avail = []
             @start_time = Time.now
-            @outputter = Domainblob::Outputs.new
+            @o = Domainblob::Outputs.new
+            @pwd = Dir.pwd
           end
+
           def sanitize_input(thePhrase)
             thePhrase.capitalize!
             thePhrase.strip!
             thePhrase
           end
+
           def make_and_or_nav_to_dir(_thePhrase)
              if File.directory?(RESULT_DIR_NAME)
                 Dir.chdir(RESULT_DIR_NAME)
@@ -30,6 +34,7 @@ module Domainblob
                Dir.chdir(RESULT_DIR_NAME)
              end
           end
+
           def http_check_domain(query)
             begin
              entry = Resolv.getaddress(query)
