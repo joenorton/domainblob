@@ -5,8 +5,6 @@
 # #LICENSING: GNU GPLv3  License##################################
 # ! usr/bin/ruby
 
-require 'domainblob/constants.rb'
-#require 'domainblob/domain_tools.rb'
 require 'domainblob/outputs.rb'
 require 'domainblob/util.rb'
 require 'domainblob/cli.rb'

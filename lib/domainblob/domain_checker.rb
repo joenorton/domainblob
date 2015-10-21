@@ -9,7 +9,8 @@ module Domainblob
     class DomainChecker
         require 'whois'
         require 'resolv'
-
+        RESULT_DIR_NAME = 'blobs'
+        RESULT_FILE_EXT = '.txt'
           def initialize(q, options)
             @whoiscounter = 0
             @httpcounter = 0
@@ -18,20 +19,13 @@ module Domainblob
             @start_time = Time.now
             @o = Domainblob::Outputs.new
             @pwd = Dir.pwd
+            setup_options(options)
           end
-          def valid_url?(url)
-            if url =~  /[#$&;=\[\]()_~\,?]/
-                false
-            else
-                if url =~  /\./
-                    lg('passed')
-                    lg(url)
-                    true
-                else
-                    false
-                end
-            end
+
+          def setup_options(options)
+                @verbose = true if options['verbose']
           end
+
           def make_and_or_nav_to_dir(_thePhrase)
              if File.directory?(RESULT_DIR_NAME)
                 Dir.chdir(RESULT_DIR_NAME)
@@ -40,7 +34,9 @@ module Domainblob
                Dir.chdir(RESULT_DIR_NAME)
              end
           end
-
+          def sanitize_input(q)
+            q.strip
+          end
           def http_check_domain(query)
             begin
              entry = Resolv.getaddress(query)
@@ -62,15 +58,20 @@ module Domainblob
               puts 'not available: ' + domain
               return false # domain not available, false
             else
-              r = w.lookup(domain)
-              @whoiscounter += 1
-              if r.available?
-                puts 'AVAILABLE: ' + domain
-                @avail.push(domain) # yes, true, domain is available
-                return true
-              else
-                puts 'not available: ' + domain
-                return false
+              begin
+                  r = w.lookup(domain)
+                  @whoiscounter += 1
+                  if r.available?
+                    puts 'AVAILABLE: ' + domain
+                    @avail.push(domain) # yes, true, domain is available
+                    return true
+                  else
+                    puts 'not available: ' + domain
+                    return false
+                  end
+              rescue Whois::ConnectionError
+                    puts 'ConnectionError - skipping'
+                    return false
               end
             end
           end
@@ -86,12 +87,14 @@ module Domainblob
           end
 
           def cycle_thru_all_prefix_and_suffix_lists(thePhrase)
-            Whois::Client.new do |w|
+            Whois::Client.new(:timeout => nil) do |w|
               for each_list in @prefix_array
                 for each_entry in each_list
                   domain_available?(w, each_entry + thePhrase + '.com')
                 end
               end
+            end
+            Whois::Client.new(:timeout => nil) do |w|
               for each_list in @suffix_array
                 for each_entry in each_list
                   domain_available?(w, thePhrase + each_entry + '.com')

@@ -24,7 +24,7 @@ module Domainblob
                 q.strip!
                 next if q.nil? || q.empty?
                 lg(q)
-                if valid_url?(q)
+                if valid_domain_name?(q)
                     begin
                         domain_available?(w, q)
                     rescue
@@ -43,7 +43,19 @@ module Domainblob
             end
             finish(q_file, results_file)
         end
-
+          def valid_domain_name?(url)
+            if url =~  /[#$&;=\[\]()_~\,?]/
+                false
+            else
+                if url =~  /\./
+                    lg('passed')
+                    lg(url)
+                    true
+                else
+                    false
+                end
+            end
+          end
         def finish(q_file, results_file)
             avail_num = @avail.length
             @avail = @avail.sort_by(&:length)
