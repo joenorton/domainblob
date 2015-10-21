@@ -13,6 +13,8 @@ module Domainblob
             puts options
             if options['checkfile']
                 Domainblob::CheckFile.new(q, options)
+            elsif options['quickcheck']
+                Domainblob::QuickCheck.new(q, options)
             else
                 Domainblob::SeedGenerator.new(q, options)
             end

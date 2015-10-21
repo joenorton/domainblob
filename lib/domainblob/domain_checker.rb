@@ -37,6 +37,19 @@ module Domainblob
           def sanitize_input(q)
             q.strip
           end
+          def valid_domain_name?(url)
+            if url =~  /[#$&;=\[\]()_~\,?]/
+                false
+            else
+                if url =~  /\./
+                    lg('passed')
+                    lg(url)
+                    true
+                else
+                    false
+                end
+            end
+          end
           def http_check_domain(query)
             begin
              entry = Resolv.getaddress(query)

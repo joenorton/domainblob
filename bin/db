@@ -26,6 +26,10 @@ optparse = OptionParser.new do |opts|
   opts.on('-l', '--list', 'MODE FLAG: Phraselist mode') do
     options['phraselist'] = true
   end
+  options['quickcheck'] = false
+  opts.on('-q', '--quickcheck', 'MODE FLAG: QuickCheck mode') do
+    options['quickcheck'] = true
+  end
   # This displays the help screen, all programs are
   # assumed to have this option.
   opts.on('-h', '--help', 'Display this screen') do

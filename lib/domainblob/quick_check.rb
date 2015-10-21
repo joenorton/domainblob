@@ -5,13 +5,16 @@
 # #LICENSING: GNU GPLv3  License##################################
 # ! usr/bin/ruby
 
-require 'domainblob/outputs.rb'
-require 'domainblob/cli.rb'
-require 'domainblob/domain_checker.rb'
-require 'domainblob/seed_generator.rb'
-require 'domainblob/check_file.rb'
-require 'domainblob/quick_check.rb'
-require 'domainblob/version.rb'
-
 module Domainblob
+    class QuickCheck < DomainChecker
+        def initialize(q, options)
+            super
+            w = Whois::Client.new
+            if domain_available?(w, q)
+                return true
+            else
+                return false
+            end
+        end
+    end
 end

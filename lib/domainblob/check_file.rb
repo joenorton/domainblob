@@ -7,7 +7,6 @@
 
 module Domainblob
     class CheckFile < DomainChecker
-
         def initialize(q_file, options)
             super
             q_file = q_file.first
@@ -31,7 +30,7 @@ module Domainblob
                         next
                     end
                 else
-                    if valid_url?(q+'.com')
+                    if valid_domain_name?(q+'.com')
                         begin
                             domain_available?(w, q+'.com')
                         rescue
@@ -43,19 +42,6 @@ module Domainblob
             end
             finish(q_file, results_file)
         end
-          def valid_domain_name?(url)
-            if url =~  /[#$&;=\[\]()_~\,?]/
-                false
-            else
-                if url =~  /\./
-                    lg('passed')
-                    lg(url)
-                    true
-                else
-                    false
-                end
-            end
-          end
         def finish(q_file, results_file)
             avail_num = @avail.length
             @avail = @avail.sort_by(&:length)
