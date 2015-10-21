@@ -19,13 +19,19 @@ module Domainblob
             @o = Domainblob::Outputs.new
             @pwd = Dir.pwd
           end
-
-          def sanitize_input(thePhrase)
-            thePhrase.capitalize!
-            thePhrase.strip!
-            thePhrase
+          def valid_url?(url)
+            if url =~  /[#$&;=\[\]()_~\,?]/
+                false
+            else
+                if url =~  /\./
+                    lg('passed')
+                    lg(url)
+                    true
+                else
+                    false
+                end
+            end
           end
-
           def make_and_or_nav_to_dir(_thePhrase)
              if File.directory?(RESULT_DIR_NAME)
                 Dir.chdir(RESULT_DIR_NAME)
@@ -56,7 +62,7 @@ module Domainblob
               puts 'not available: ' + domain
               return false # domain not available, false
             else
-              r = w.lookup(domain + '.com')
+              r = w.lookup(domain)
               @whoiscounter += 1
               if r.available?
                 puts 'AVAILABLE: ' + domain

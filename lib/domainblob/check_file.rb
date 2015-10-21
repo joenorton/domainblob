@@ -19,9 +19,27 @@ module Domainblob
             make_and_or_nav_to_dir(RESULT_DIR_NAME)
             @o.start_output(results_file, q_file)
             w = Whois::Client.new
-            File.readlines(@pwd + '/' + q_file + RESULT_FILE_EXT).each do |q|
-                q = sanitize_input(q.strip)
-                domain_available?(w, q)
+            seeds = File.readlines(@pwd + '/' + q_file + RESULT_FILE_EXT)
+            for q in seeds
+                q.strip!
+                next if q.nil? || q.empty?
+                lg(q)
+                if valid_url?(q)
+                    begin
+                        domain_available?(w, q)
+                    rescue
+                        next
+                    end
+                else
+                    if valid_url?(q+'.com')
+                        begin
+                            domain_available?(w, q+'.com')
+                        rescue
+                            next
+                        end
+                    end
+                    next
+                end
             end
             finish(q_file, results_file)
         end
@@ -29,28 +47,18 @@ module Domainblob
         def finish(q_file, results_file)
             avail_num = @avail.length
             @avail = @avail.sort_by(&:length)
-            lg('timediff')
-            lg(@time_diff)
-            lg('avail num')
-            lg(avail_num)
-            lg('whoiscounter')
-            lg(@whoiscounter)
-            lg('httpcounter')
-            lg(@httpcounter)
             #
             @o.write_results(results_file, @avail)
             #
             stop_clock
             #
-            '''
             @o.ending_output(
-                timeDiff = @time_diff || 0,
-                availNum = avail_num || 0,
-                whoiscounter = @whoiscounter || 0,
-                httpcounter = @httpcounter || 0,
+                timeDiff = @time_diff,
+                availNum = avail_num,
+                whoiscounter = @whoiscounter,
+                httpcounter = @httpcounter,
                 blobResults = results_file
             )
-            '''
             results_file.close
             #
             File.rename(
@@ -58,7 +66,6 @@ module Domainblob
               @pwd + '/' + q_file + '_results'  + avail_num.to_s + RESULT_FILE_EXT
             )
             #
-            @o.ending_output(@time_diff, avail_num)
             Dir.chdir('..')
         end
     end
