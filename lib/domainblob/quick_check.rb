@@ -9,11 +9,13 @@ module Domainblob
     class QuickCheck < DomainChecker
         def initialize(q, options)
             super
+            start(q)
+        end
+
+        def start(q)
             w = Whois::Client.new
-            if domain_available?(w, q)
-                return true
-            else
-                return false
+            q.each do |domain|
+                domain_available?(w, domain)
             end
         end
     end

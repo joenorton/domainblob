@@ -7,10 +7,6 @@
 module Domainblob
     class CLI
         def initialize(q, options)
-            puts 'q'
-            puts q
-            puts 'opts'
-            puts options
             if options['checkfile']
                 Domainblob::CheckFile.new(q, options)
             elsif options['quickcheck']

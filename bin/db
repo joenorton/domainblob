@@ -49,9 +49,12 @@ if options['verbose']
     puts '### Being verbose'
     puts '### In CheckFile Mode' if options['checkfile']
     puts '### In PhraseList Mode' if options['phraselist']
+    puts '### In QuickCheck Mode' if options['quickcheck']
+    puts "### ARGS: #{ARGV}"
+    puts "### Opts: #{options}"
 end
 puts '###############################'
-puts "### [Domainblob]: #{ARGV}"
+puts '### Starting [Domainblob]'
 Domainblob::CLI.new(ARGV, options)
 puts '### [Domainblob] is done.'
 puts '###############################'
