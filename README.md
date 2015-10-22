@@ -35,9 +35,11 @@ PhraseList Mode
 
 QuickCheck Mode
 ---------------
+...documentation needed...  
 
 CheckFile Mode
 --------------
+...documentation needed...  
 
 How Long Does it Take?
 =====================
