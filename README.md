@@ -21,12 +21,19 @@ Usage: db [MODE FLAG] [options] seed_keyword
 
 Default Mode
 ------------
-1. When you run the script, with **ruby domainblob.rb insert_cool_word_here** then it will use your root phrase to check over 5,000 potential domain names for availability.  
+1. When you run the script, with **ruby domainblob.rb insert_cool_word_here** then it will use your root phrase to check over 200 potential domain names for availability. (Using pre-made prefix and suffix lists I have included in the package) 
 2. Sit tight, it takes about 1 second per domain check. This amounts to somewhere between an hour and 2 for an entire batch to run.  
 3. When it is done, it will create a text document named after the phrase you used as your seed - followed by the number found to be available. It will put this result file into your newly created 'blobs' folder. Example: blobs/Tech30.txt  
 
 PhraseList Mode 
 ---------------
+```
+db --phraselist joes_list_of_seed_keywords.txt
+```
+or
+```
+db -l joes_list_of_seed_keywords.txt
+```
 1. Create a txt document named **totalPhraseList.txt** in the same directory as the script  
 2. The script will process each line of the **totalPhraseList.txt** document, so put one seed word per each line and they will be run right after another.  
 3. When you run the script, with **ruby domainblob.rb** then it will use your root phrase to check a couple hundred potential domain names for availability.  
@@ -37,13 +44,24 @@ QuickCheck Mode
 ---------------
 This is what to use when you just want to check a domain name on the fly. Just type:
 ```
+db --quickcheck domain-name.com
+```
+or
+```
 db -q domain-name.com
 ```
-And it will check whether the domain you entered is available or not!  No more going to Godaddy all the time!  
+And it will check whether the domain you entered is available or not!   No more going to Godaddy all the time!  
 
 CheckFile Mode
 --------------
-...documentation needed...  
+This is what to use when you have a long list of domain names that you want to check. Simply load them all into a text file, one per each line, and then set domainblob on it. Here's an example:
+```
+db --checkfile joes_list_of_domains.txt
+```
+or
+```
+db -c joes_list_of_domains.txt
+```
 
 How Long Does it Take?
 =====================
