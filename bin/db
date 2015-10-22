@@ -27,7 +27,7 @@ optparse = OptionParser.new do |opts|
     options['phraselist'] = true
   end
   options['quickcheck'] = false
-  opts.on('-q', '--quickcheck', 'MODE FLAG: QuickCheck mode') do
+  opts.on('-q', '--quick', 'MODE FLAG: QuickCheck mode') do
     options['quickcheck'] = true
   end
   # This displays the help screen, all programs are

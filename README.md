@@ -21,14 +21,17 @@ Usage: db [MODE FLAG] [options] seed_keyword
 
 Default Mode
 ------------
-1. When you run the script, with **ruby domainblob.rb insert_cool_word_here** then it will use your root phrase to check over 200 potential domain names for availability. (Using pre-made prefix and suffix lists I have included in the package) 
-2. Sit tight, it takes about 1 second per domain check. This amounts to somewhere between an hour and 2 for an entire batch to run.  
-3. When it is done, it will create a text document named after the phrase you used as your seed - followed by the number found to be available. It will put this result file into your newly created 'blobs' folder. Example: blobs/Tech30.txt  
+```
+db seed_keyword
+```
+When you run the script, with **db insert_cool_word_here** then it will use your root phrase to check over 200 potential domain names for availability. (Using pre-made prefix and suffix lists I have included in the package) 
+
+When it is done, it will create a text document named after the phrase you used as your seed - followed by the number found to be available. It will put this result file into your newly created 'blobs' folder. Example: blobs/Tech30.txt  
 
 PhraseList Mode 
 ---------------
 ```
-db --phraselist joes_list_of_seed_keywords.txt
+db --list joes_list_of_seed_keywords.txt
 ```
 or
 ```
@@ -44,7 +47,7 @@ QuickCheck Mode
 ---------------
 This is what to use when you just want to check a domain name on the fly. Just type:
 ```
-db --quickcheck domain-name.com
+db --quick domain-name.com
 ```
 or
 ```
@@ -56,7 +59,7 @@ CheckFile Mode
 --------------
 This is what to use when you have a long list of domain names that you want to check. Simply load them all into a text file, one per each line, and then set domainblob on it. Here's an example:
 ```
-db --checkfile joes_list_of_domains.txt
+db --check joes_list_of_domains.txt
 ```
 or
 ```
