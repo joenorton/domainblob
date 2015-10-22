@@ -35,7 +35,11 @@ PhraseList Mode
 
 QuickCheck Mode
 ---------------
-...documentation needed...  
+This is what to use when you just want to check a domain name on the fly. Just type:
+```
+db -q domain-name.com
+```
+And it will check whether the domain you entered is available or not!  No more going to Godaddy all the time!  
 
 CheckFile Mode
 --------------
