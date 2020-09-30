@@ -79,3 +79,8 @@ Required Gems:
 License:
 ========
 GNU GPLv3 (http://www.gnu.org/licenses/gpl.html)
+
+overall its good
+but I'm a beginner and literally i'm not understanding as much as i expect , overall it is good , but try to make it beginner friendly
+try to accept my change sir please it will be very helpful
+thanks
